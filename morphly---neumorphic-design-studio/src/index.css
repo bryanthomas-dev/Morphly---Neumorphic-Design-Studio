@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --bg: #e8e8ec;
+  --text: #1a1a2e;
+  --muted: #6b7280;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --light-s: #ffffff;
+  --dark-s: #c5c5ca;
+  --card-bg: rgba(255,255,255,0.55);
+  --radius: 40px;
+  --size: 260px;
+  --dist: 20px;
+  --blur: 40px;
+  --intensity: 0.15;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.preview-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 12px 12px 40px rgba(0, 0, 0, 0.08), -4px -4px 20px rgba(255, 255, 255, 0.9);
+}
+
+.control-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06), -4px -4px 16px rgba(255, 255, 255, 0.85);
+}
+
+.code-wrap {
+  background: #0f0f1a;
+}
+
+.code-wrap pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #a9b1d6;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.prop { color: #7aa2f7; }
+.val { color: #e0af68; }
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(108, 99, 255, 0.4);
+}

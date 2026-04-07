@@ -1,0 +1,29 @@
+{
+  "entities": {
+    "UserDesign": {
+      "title": "User Design",
+      "description": "A neumorphic design saved by a user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user who saved the design." },
+        "name": { "type": "string", "description": "The name of the design." },
+        "color": { "type": "string", "description": "The base hex color." },
+        "size": { "type": "number", "description": "The size of the element." },
+        "radius": { "type": "number", "description": "The border radius." },
+        "dist": { "type": "number", "description": "The shadow distance." },
+        "blur": { "type": "number", "description": "The shadow blur." },
+        "intensity": { "type": "number", "description": "The shadow intensity." },
+        "shape": { "type": "string", "enum": ["flat", "concave", "convex", "pressed"] },
+        "direction": { "type": "string", "enum": ["top-left", "top-right", "bottom-left", "bottom-right"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "color", "size", "radius", "dist", "blur", "intensity", "shape", "direction", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/designs/{designId}": {
+      "schema": "UserDesign",
+      "description": "Collection of neumorphic designs saved by users."
+    }
+  }
+}

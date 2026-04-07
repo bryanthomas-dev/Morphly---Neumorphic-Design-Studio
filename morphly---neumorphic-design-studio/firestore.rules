@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: designs
+    // Document ID: auto-generated
+    // Fields:
+    //   - userId: string (required) - Owner UID
+    //   - name: string (optional) - Design name
+    //   - color: string (required) - Hex color
+    //   - size: number (required) - Element size
+    //   - radius: number (required) - Border radius
+    //   - dist: number (required) - Shadow distance
+    //   - blur: number (required) - Shadow blur
+    //   - intensity: number (required) - Shadow intensity
+    //   - shape: string (required) - flat, concave, convex, pressed
+    //   - direction: string (required) - top-left, top-right, bottom-left, bottom-right
+    //   - createdAt: timestamp (required) - Creation time
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidDesign(data) {
+      return data.userId is string &&
+             data.color is string && data.color.matches("^#[0-9a-fA-F]{6}$") &&
+             data.size is number && data.size > 0 &&
+             data.radius is number && data.radius >= 0 &&
+             data.dist is number && data.dist >= 0 &&
+             data.blur is number && data.blur >= 0 &&
+             data.intensity is number && data.intensity >= 0 &&
+             data.shape in ['flat', 'concave', 'convex', 'pressed'] &&
+             data.direction in ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+    }
+
+    match /designs/{designId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId) && isValidDesign(request.resource.data);
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+      // No update allowed for now, just save new ones
+    }
+  }
+}
